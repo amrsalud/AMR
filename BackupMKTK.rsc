@@ -994,3 +994,39 @@ add interface=ether10-EREA
 add interface=sfp-MUTUAL
 add interface=BridgeGeneral
 
+#---------------------------------------------------------------------------------------------------
+# Configuracion de VPN EoIP Español
+# Configuracion Interfaz Eoip
+/interface eoip
+name="eoip-tunnel-Wifi" mtu=auto actual-mtu=3542 l2mtu=65535 \
+arp=enabled arp-timeout=auto \ 
+loop-protect=default loop-protect-status=off \
+loop-protect-send-interval=0s loop-protect-disable-time=0s \
+local-address=0.0.0.0 remote-address=200.45.234.36 tunnel-id=1 \ 
+dscp=inherit clamp-tcp-mss=yes dont-fragment=no allow-fast-path=yes  comment=EoIP-Espanol
+
+#Address de la interfaz Eoip
+/ip address
+add address=10.10.10.1/30 comment=IP-EoIP-Espanol interface=eoip-tunnel-Espanol network=10.10.10.0
+
+#Rutas hacia español
+/ip route
+ add dst-address=192.168.30.0/24 gateway=10.10.10.2
+    
+#---------------------------------------------------------------------------------------------------
+# Configuracion de VPN EoIP Comercial
+/interface eoip
+name="eoip-tunnel-Wifi" mtu=auto actual-mtu=3542 l2mtu=65535 \
+arp=enabled arp-timeout=auto \ 
+loop-protect=default loop-protect-status=off \
+loop-protect-send-interval=0s loop-protect-disable-time=0s \
+local-address=0.0.0.0 remote-address=200.45.234.36 tunnel-id=2 \ 
+dscp=inherit clamp-tcp-mss=yes dont-fragment=no allow-fast-path=yes  comment=EoIP-Espanol
+
+#Address de la interfaz Eoip
+/ip address
+add address=10.10.10.5/30 comment=IP-EoIP-Comercial interface=eoip-tunnel-Comercial network=10.10.10.0
+
+#Rutas hacia español
+/ip route
+ add dst-address=192.168.20.0/24 gateway=10.10.10.6
